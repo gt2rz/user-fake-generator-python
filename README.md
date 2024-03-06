@@ -1,5 +1,5 @@
 # Python Virtual Environment Setup
-python -m venv venv
+python3 -m venv venv
 
 # Activate the virtual environment
 ## On linux or mac
@@ -12,7 +12,7 @@ venv\Scripts\activate
 pip install -r requirements.txt
 
 # Run the application
-python app.py
+python3 app.py
 
 # Deactivate the virtual environment
 deactivate

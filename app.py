@@ -4,48 +4,69 @@ import redis
 from redis.commands.json.path import Path
 from redis.commands.search.field import TextField, NumericField
 from redis.commands.search.indexDefinition import IndexDefinition, IndexType
-from redisearch import TextField, NumericField, IndexDefinition, IndexType
+
+from data import names_options, surnames_options, domain_options, city_options, street_options, document_type_options, person_type_options
 
 def generate_user(max_length=10):
-    """Generates a user with random data for each field."""
-    
-    # Define first and last name options
-    first_names = ["Alice", "Bob", "Charlie", "David", "Eve", "Frank", "Grace", "Heidi", "Ivan", "Jack", "Karl", "Linda", "Mike", "Nancy", "Oscar", "Paul", "Quincy", "Ruth", "Steve", "Tina", "Ursula", "Victor", "Wendy", "Xavier", "Yvonne", "Zack"]
-    last_names = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", "Martin", "Lee", "Perez", "Thompson", "White", "Harris", "Sanchez", "Clark", "Ramirez", "Lewis", "Robinson", "Walker", "Young", "Allen", "King", "Wright", "Scott", "Torres", "Nguyen", "Hill", "Flores", "Green", "Adams", "Nelson", "Baker", "Hall", "Rivera", "Campbell", "Mitchell", "Carter", "Roberts", "Gomez", "Phillips", "Evans", "Turner", "Diaz", "Parker", "Cruz", "Edwards", "Collins", "Reyes", "Stewart", "Morris", "Morales", "Murphy", "Cook", "Rogers", "Gutierrez", "Ortiz", "Morgan", "Cooper", "Peterson", "Bailey", "Reed", "Kelly", "Howard", "Ramos", "Kim", "Cox", "Ward", "Richardson", "Watson", "Brooks", "Chavez", "Wood", "James", "Bennett", "Gray", "Mendoza", "Ruiz", "Hughes", "Price", "Alvarez", "Castillo", "Sanders", "Patel", "Myers", "Long", "Ross", "Foster", "Jimenez", "Powell", "Jenkins", "Perry", "Russell", "Sullivan", "Bell", "Cole", "Butler", "Henderson", "Barnes", "Gonzales", "Fisher", "Vasquez", "Simmons", "Romero", "Jordan", "Patterson", "Alexander", "Hamilton", "Graham", "Reynolds", "Griffin", "Wallace", "Moreno", "West", "Coleman", "Hayes", "Bryant", "Herrera", "Gibson", "Ellis", "Tran", "Medina", "Luna", "Sims", "Kennedy", "Wells", "Alvarez", "Woods", "Mendoza", "Castillo", "Olson", "Webb"]
-
-    # Define domain options
-    domain_options = ["gmail.com", "hotmail.com", "yahoo.com", "outlook.com", "icloud.com", "aol.com", "protonmail.com", "zoho.com", "yandex.com", "mail.com"]
-
-    # Define city options
-    city_options = ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose", "Austin", "Jacksonville", "San Francisco", "Indianapolis", "Columbus", "Fort Worth", "Charlotte", "Seattle", "Denver", "El Paso", "Detroit", "Washington", "Boston", "Memphis", "Nashville", "Portland", "Oklahoma City", "Las Vegas", "Baltimore", "Louisville", "Milwaukee", "Albuquerque", "Tucson", "Fresno", "Sacramento", "Mesa", "Kansas City", "Atlanta", "Long Beach", "Omaha", "Raleigh", "Miami", "Oakland", "Minneapolis", "Tulsa", "Cleveland", "Wichita", "Arlington", "New Orleans", "Bakersfield", "Tampa", "Honolulu", "Aurora", "Anaheim", "Santa Ana", "St. Louis", "Riverside", "Corpus Christi", "Lexington", "Pittsburgh", "Anchorage", "Stockton", "Cincinnati", "St. Paul", "Toledo", "Greensboro", "Newark", "Plano", "Henderson", "Lincoln", "Buffalo", "Fort Wayne", "Jersey City", "Chula Vista", "Orlando", "St. Petersburg", "Norfolk", "Chandler", "Laredo", "Madison", "Durham", "Lubbock", "Winston-Salem", "Garland", "Glendale", "Hialeah", "Reno", "Baton Rouge", "Irvine", "Chesapeake", "Irving", "Scottsdale", "North Las Vegas", "Fremont", "Gilbert", "San Bernardino", "Boise", "Birmingham", "Richmond", "Spokane", "Des Moines", "Montgomery", "Modesto", "Fayetteville", "Tacoma", "Shreveport", "Fontana", "Oxnard", "Aurora", "Moreno Valley", "Akron", "Yonkers", "Columbus", "Augusta", "Little Rock", "Amarillo", "Mobile", "Huntington Beach", "Glendale", "Grand Rapids", "Salt Lake City", "Tallahassee"]
-
-    # Define street options
-    street_options = ["Main St", "Elm St", "Oak St", "Maple St", "Pine St", "Cedar St", "Washington St", "Church St", "North St", "South St", "Park St", "High St", "Central St", "School St", "Pleasant St", "Grove St", "River St", "Franklin St", "Pearl St", "Water St", "Union St", "Bridge St", "State St", "Broadway", "Chestnut St", "Market St", "Mill St", "Spruce St", "Front St", "Adams St", "Liberty St", "Spring St", "Court St", "Prospect St", "Meadow St", "Locust St", "Hill St", "Madison St", "Vine St", "Lincoln St", "Jefferson St", "Madison St", "Hillside Ave", "Sunset Dr", "Forest Ave", "Crescent St", "Pleasant Ave", "Cottage St", "Laurel St", "Ridge St", "Highland Ave", "Beech St", "Columbia St", "Harrison St", "Hickory St", "Chestnut St", "Cedar Ave", "Lake St", "Pleasant St", "Riverside Dr", "Broad St", "Hillside Ave", "Pine St", "Hillcrest Ave", "Cedar St", "Crescent St", "Hill St", "Hillcrest Ave"]
-
-    # Generate random ID
+     # Generate random ID
     id = random.randint(1, max_length)
 
-    # Generate random email
-    first_name = random.choice(first_names)
-    last_name = random.choice(last_names)
-    domain = random.choice(domain_options)
-    email = f"{first_name.lower()}.{last_name.lower()}@{domain}"
-
-    # Generate random document (replace with your document format logic)
-    document = f"{random.randint(10000000, 99999999)}-{random.randint(1000, 9999)}"
-
-    # Generate random phone number (replace with your phone number format logic)
-    phone = f"+1 ({random.randint(100, 999)}) {random.randint(1000, 9999)}-{random.randint(1000, 9999)}"
+    # Generate random first and last name
+    first_name = random.choice(names_options)
+    last_name = random.choice(surnames_options)
 
     # Generate random full name
     full_name = f"{first_name} {last_name}"
+
+    # Generate random email
+    domain = random.choice(domain_options)
+    email = f"{first_name.lower()}.{last_name.lower()}_{id}@{domain}"
+
+    # Generate random document
+    document = f"{random.randint(1000000, 9999999999)}"
+
+    # Generate random phone id
+    phone_id = random.randint(1, max_length)
+
+    # Generate random phone number
+    phone = f"+57{random.randint(100, 999)}{random.randint(100, 999)}{random.randint(1000, 9999)}"
 
     # Generate random address
     street = random.choice(street_options)
     city = random.choice(city_options)
     address = f"{street}, {city}"
 
-    return {"id": id, "email": email, "document": document, "phone": phone, "fullname": full_name, "address": address}
+    billing_data = {
+        "id": random.randint(1, max_length),
+        "names": first_name,
+        "surnames": last_name,
+        "email": email,
+        "phone": phone,
+        "address": address,
+        "document": document,
+        "responsibility_rent": random.randint(1, 2),
+        "responsibility_vat": random.randint(1, 2),
+        "person_type_id": random.randint(1, 3),
+        "person_type": random.choice(person_type_options),
+        "document_type_id": random.randint(1, 4),
+        "document_type": random.choice(document_type_options),
+    }
+
+    # Generate random membership
+    membership = None
+    if id % 2 == 0:
+        membership = {
+            "id": random.randint(1, 9),
+            "name": random.choice(["Basic", "Premium", "Gold", "Platinum", "Diamond"]),
+            "discount": random.randint(5, 20)
+        }
+
+    # Generate random flags
+    is_member = membership is not None
+    is_locked = random.choice([True, False])
+    is_cached = random.choice([True, False])
+
+    return {"id": id, "email": email, "document": document, "phone": phone, "fullname": full_name, "address": address, "billing_data": billing_data, "membership": membership, "is_member": is_member, "is_locked": is_locked, "is_cached": is_cached}
 
 
 def sendToRedis(r, user):    
@@ -56,20 +77,41 @@ def sendToRedis(r, user):
 
 
 if __name__ == "__main__":
-    max_length = 10
+    max_length = 4000000
     r = redis.Redis(host='localhost', port=6379)
-    r.execute_command('FT.DROPINDEX', 'idx:users')
-    r.execute_command('JSON.FLUSH')
-    r.execute_command('FT.CREATE', 'idx:users5', 'ON', 'HASH', 'PREFIX', '1', 'user:', 'SCHEMA', 'id', 'NUMERIC', 'email', 'TEXT', 'phone', 'TEXT', 'document', 'TEXT', 'fullname', 'TEXT', 'address', 'TEXT')  
-    print("Index created")
+    idx = "idx:customers"
 
+    # Drop index idx:customers if exists
+    try:
+        r.execute_command('FT.DROPINDEX', idx)
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        print(f"Index idx:customers not found")
+    else:
+        print(f"Index idx:customers dropped")
+
+    # Create index idx:customers
+    try:
+        r.execute_command('FT.CREATE', idx, 'ON', 'HASH', 'PREFIX', '1', 'user:', 'SCHEMA', 'id', 'NUMERIC', 'email', 'TEXT', 'phone', 'TEXT', 'document', 'TEXT', 'fullname', 'TEXT', 'billing_data.names', 'TEXT', 'billing_data.surnames', 'TEXT', 'billing_data.email', 'TEXT', 'billing_data.phone', 'TEXT', 'billing_data.address', 'TEXT', 'billing_data.document', 'TEXT', 'billing_data.responsibility_rent', 'NUMERIC', 'billing_data.responsibility_vat', 'NUMERIC', 'billing_data.person_type_id', 'NUMERIC', 'billing_data.person_type', 'TEXT', 'billing_data.document_type_id', 'NUMERIC', 'billing_data.document_type', 'TEXT', 'membership.id', 'NUMERIC', 'membership.name', 'TEXT', 'membership.discount', 'NUMERIC', 'is_member', 'TAG', 'is_locked', 'TAG', 'is_cached', 'TAG', 'membership.name', 'TAG', 'membership.discount', 'NUMERIC', 'is_member', 'TAG', 'is_locked', 'TAG', 'is_cached', 'TAG')
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        print(f"Index idx:customers not created")
+    else:
+        print(f"Index idx:customers created") 
+
+    # Send data to Redis
     for _ in range(max_length):
-        user = generate_user(max_length)
-        print(user)
-        # sendToRedis(r, user)
-        index = "user:" + str(user["id"])
-        r.json().set(index, Path.root_path(), user)
-        print(f"User {user['id']} sent to Redis")
+        try:
+            user = generate_user(max_length)
+            index = "customers:" + str(user["id"])
+            r.json().set(index, Path.root_path(), user)
+
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            print(f"User {user['id']} not sent to Redis")
+        else:           
+            print(user)
+            print(f"User {user['id']} sent to Redis")
 
 
 

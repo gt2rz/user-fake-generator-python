@@ -1,0 +1,32 @@
+{
+    "id": 123456,
+    "fullname": "Fulanito Mengano",
+    "email": "fulanito.mengano@example.com",
+    "document": "1234567890",
+    "document_type": "CÉDULA DE CIUDADANÍA",
+    "phone_id": 1,
+    "phone": "8786785234",
+    "billing_data": {
+        "id": 1234,
+        "names": "FULANITO",
+        "surnames": "MENGANO",
+        "email": "fulanito.mengano@example.com",
+        "phone": "8786785234",
+        "address": "Av. 1 #1 - 1, New York",
+        "document": "1234567890",
+        "responsibility_rent": 1,
+        "responsibility_vat": 1,
+        "person_type_id": 1,
+        "person_type": "Natural",
+        "document_type_id": 1,
+        "document_type": "CÉDULA DE CIUDADANÍA"
+    },
+    "membership": {
+        "id": 1,
+        "name": "VIP",
+        "discount": 25
+    },
+    "is_member": true,
+    "is_locked": false,
+    "is_cache": false
+}
